@@ -10,6 +10,7 @@ Session(app)
 
 @app.route("/")
 def hello_world():
+    session["test"] = "shashlyk"
     return "<p>Hello, World!</p>"
 
 @app.route("/cookie")
