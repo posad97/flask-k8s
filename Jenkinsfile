@@ -6,12 +6,12 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
     }
     stages {
-        stage('Clone Repository') {
-            steps {
-                // Pull the latest code from GitHub
-                checkout scm
-            }
-        }
+        // stage('Clone Repository') {
+        //     steps {
+        //         // Pull the latest code from GitHub
+        //         checkout scm
+        //     }
+        // }
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image
