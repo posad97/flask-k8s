@@ -15,4 +15,4 @@ def hello_world():
 
 @app.route("/cookie")
 def return_cookie_id():
-    return f"Session ID: {session.sid}"
+    return {"SessionID": session.sid, "test": session["test"]}
