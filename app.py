@@ -20,8 +20,12 @@ def hello_world():
         database = os.environ.get("DB_NAME")       # Database name
     )
     cursor = db.cursor()
+    cursor.execute("INSERT INTO users (username, hash, cash) VALUES (%s,%s,%s)", ("john_doe", "hashed_password_123", 10000.00))
+    db.commit()
     cursor.execute("SELECT * FROM users")  # Query the users table
     result = cursor.fetchall()
+    cursor.close()
+    db.close()
 
     return str(result)
     # return "<p>Hello, World!</p>"
