@@ -2,7 +2,7 @@ FROM python:3.8-alpine
 
 WORKDIR /app
 
-RUN pip install Flask flask-session
+RUN pip install Flask flask-session mysql-connector-python
 
 COPY . .
 

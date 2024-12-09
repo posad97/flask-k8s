@@ -4,6 +4,9 @@ pipeline {
         DOCKER_IMAGE = 'posad97/flask-app:latest'
         APP_CONTAINER_NAME = 'flask-app'
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
+        DB_CREDENTIALS_ID = 'db-credentials'
+        DB_HOSTNAME = credentials('db-hostname')
+        DB_NAME = credentials('db-name')
     }
     stages {
         stage('Build Docker Image') {
@@ -31,12 +34,19 @@ pipeline {
                     sh "docker rm -f ${APP_CONTAINER_NAME} || true"
                     
                     // Pull the image from Docker Hub and run the new container
-                    sh """
-                    docker run -d \
+                    withCredentials([usernamePassword(credentialsId: DB_CREDENTIALS_ID, passwordVariable: 'DB_PASSWORD', usernameVariable: 'DB_USERNAME')]) {
+                        sh """
+                        docker run -d \
                         --name ${APP_CONTAINER_NAME} \
                         -p 5000:5000 \
+                        -e DB_HOSTNAME=${env.DB_HOSTNAME} \
+                        -e DB_USERNAME=${DB_USERNAME} \
+                        -e DB_PASSWORD=${DB_PASSWORD} \
+                        -e DB_NAME=${env.DB_NAME} \
                         ${DOCKER_IMAGE}
                     """
+                    }
+                    
                 }
             }
         }
