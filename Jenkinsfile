@@ -38,6 +38,7 @@ pipeline {
                         sh """
                         docker run -d \
                         --name ${APP_CONTAINER_NAME} \
+                        --network backend \
                         -p 5000:5000 \
                         -e DB_HOSTNAME=${env.DB_HOSTNAME} \
                         -e DB_USERNAME=${DB_USERNAME} \
